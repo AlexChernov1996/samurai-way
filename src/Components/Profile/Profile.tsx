@@ -1,9 +1,12 @@
 import React from 'react';
-
+import styles from "./profile.module.css"
+import MyPosts from "./MyPosts/MyPosts";
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
 const Profile = () => {
     return (
-        <div>
-            
+        <div className={styles.profile}>
+         <ProfileInfo/>
+            <MyPosts/>
         </div>
     );
 };

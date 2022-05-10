@@ -1,0 +1,13 @@
+.dialogs{
+    display: flex;
+    background: antiquewhite;
+}
+.users{
+    padding: 5px;
+    width: 300px;
+    border:1px solid
+}
+.messages{
+    padding: 5px;
+}
+
