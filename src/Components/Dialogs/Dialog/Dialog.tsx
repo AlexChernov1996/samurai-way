@@ -1,14 +1,15 @@
 import {NavLink} from "react-router-dom";
 import React from "react";
+import styles from "../../Navbar/navbar.module.css";
 
 type DialogPropsType = {
-    url: string
+    id: string
     userName: string
 }
 export const Dialog = (props: DialogPropsType) => {
     return (
-        <div>
-            <NavLink to={props.url}>{props.userName}</NavLink>
-        </div>)
+        <NavLink className={() => styles.list} activeClassName={styles.listActive}
+                 to={`/dialogs/${props.id}`}>{props.userName}</NavLink>
+    )
 
 }

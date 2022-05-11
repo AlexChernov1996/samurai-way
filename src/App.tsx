@@ -5,15 +5,20 @@ import Header from "./Components/Header/Header";
 import Profile from "./Components/Profile/Profile";
 import Dialogs from "./Components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
+import {StoreType} from "./state/State";
 
-function App() {
+type AppPropsType = {
+    store:StoreType
+}
+
+function App(props: AppPropsType) {
     return (
         <BrowserRouter>
             <div className="App">
                 <Header/>
                 <Navbar/>
-                <Route component={Profile} path={'/profile'}/>
-                <Route component={Dialogs} path={'/dialogs'}/>
+                <Route render={() => <Profile profilePage = {props.store.profilePage} />} path={'/profile'}/>
+                <Route render={() => <Dialogs dialogsPage = {props.store.dialogsPage}/>} path={'/dialogs'}/>
             </div>
         </BrowserRouter>
     );

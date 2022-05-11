@@ -1,5 +1,25 @@
-.navbar{
-    display: table-column;
-    background: darkcyan;
+
+.navbar {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    height: 200px;
+    background-color: #f1f1f1;
     grid-area: n;
+
 }
+.list{
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+ .list:hover{
+    background-color: #555;
+    color: white
+}
+.listActive{
+    background-color: #04AA6D;
+    color: white;
+}
+

@@ -1,0 +1,17 @@
+.addPostForm{
+    background: #f1f1f1;
+}
+.addPostForm textarea{
+    width: 300px;
+    border: #0dbb7b;
+}
+.addPostForm button{
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+}
