@@ -5,12 +5,13 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {ProfilePageType} from "../../state/State";
 type ProfilePropsType = {
     profilePage: ProfilePageType
+    addPost:(text:string)=>void
 }
 const Profile = (props:ProfilePropsType) => {
     return (
         <div className={styles.profile}>
          <ProfileInfo/>
-            <MyPosts posts = {props.profilePage.posts}/>
+            <MyPosts posts = {props.profilePage.posts} addPost={props.addPost}/>
         </div>
     );
 };

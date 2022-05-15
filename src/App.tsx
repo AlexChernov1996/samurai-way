@@ -9,18 +9,17 @@ import {StoreType} from "./state/State";
 
 type AppPropsType = {
     store:StoreType
+    addPost:(text:string)=>void
 }
 
 function App(props: AppPropsType) {
     return (
-        <BrowserRouter>
             <div className="App">
                 <Header/>
                 <Navbar/>
-                <Route render={() => <Profile profilePage = {props.store.profilePage} />} path={'/profile'}/>
+                <Route render={() => <Profile profilePage = {props.store.profilePage} addPost={props.addPost} />} path={'/profile'}/>
                 <Route render={() => <Dialogs dialogsPage = {props.store.dialogsPage}/>} path={'/dialogs'}/>
             </div>
-        </BrowserRouter>
     );
 }
 

@@ -1,3 +1,5 @@
+import {rerenderTree} from "../rerenderTree";
+
 export type DialogsType = {
     id:string
     name:string
@@ -43,4 +45,7 @@ export const store = {
         ]
     }
 }
-
+export const addPost = (text:string) =>{
+    store.profilePage.posts.push({id:new Date().toString(),text,likes: 0})
+    rerenderTree(store)
+}
