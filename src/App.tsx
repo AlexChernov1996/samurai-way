@@ -5,7 +5,7 @@ import Header from "./Components/Header/Header";
 import Profile from "./Components/Profile/Profile";
 import Dialogs from "./Components/Dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
-import {StoreType} from "./state/State";
+import {changeTextForPost, StoreType} from "./state/State";
 
 type AppPropsType = {
     store:StoreType
@@ -17,7 +17,12 @@ function App(props: AppPropsType) {
             <div className="App">
                 <Header/>
                 <Navbar/>
-                <Route render={() => <Profile profilePage = {props.store.profilePage} addPost={props.addPost} />} path={'/profile'}/>
+                <Route render={() => <Profile profilePage = {props.store.profilePage}
+                                              addPost={props.addPost}
+                                              changeTextForPost={changeTextForPost}
+                />}
+                       path={'/profile'}
+                />
                 <Route render={() => <Dialogs dialogsPage = {props.store.dialogsPage}/>} path={'/dialogs'}/>
             </div>
     );
