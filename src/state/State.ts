@@ -1,4 +1,3 @@
-
 export type DialogsType = {
     id: string
     name: string
@@ -20,46 +19,57 @@ export type ProfilePageType = {
     posts: PostType[]
     textForPost: string
 }
-export type StoreType = {
+export type StateType = {
     dialogsPage: DialogsPageType
     profilePage: ProfilePageType
 }
+export type StoreType = {
+    state: StateType
+    callSubscriber: () => void
+    addPost: (text: string) => void
+    changeTextForPost: (text: string) => void
+    subscribe: (observer:() => void) => void
+}
 export const store = {
-    dialogsPage: {
-        dialogs: [
-            {id: '1', name: 'Dima'},
-            {id: '2', name: 'Kolya'},
-            {id: '3', name: 'Sasha'},
-            {id: '4', name: 'Katya'},
-        ],
-        messages: [
-            {id: '1', text: 'Lorem ipsum.'},
-            {id: '2', text: 'Lorem ipsum12331.'},
-            {id: '3', text: 'Lorem ipsum12311ddfwe dfss.'},
-        ]
+    state: {
+        dialogsPage: {
+            dialogs: [
+                {id: '1', name: 'Dima'},
+                {id: '2', name: 'Kolya'},
+                {id: '3', name: 'Sasha'},
+                {id: '4', name: 'Katya'},
+            ],
+            messages: [
+                {id: '1', text: 'Lorem ipsum.'},
+                {id: '2', text: 'Lorem ipsum12331.'},
+                {id: '3', text: 'Lorem ipsum12311ddfwe dfss.'},
+            ]
+        },
+        profilePage: {
+            posts: [
+                {id: '1', text: 'Lorem ipsum dolor sit.', likes: 4},
+                {id: '2', text: 'Lorem ipsum dolor sit.', likes: 2},
+            ],
+            textForPost: "It-kamasutra"
+        }
     },
-    profilePage: {
-        posts: [
-            {id: '1', text: 'Lorem ipsum dolor sit.', likes: 4},
-            {id: '2', text: 'Lorem ipsum dolor sit.', likes: 2},
-        ],
-        textForPost: "It-kamasutra"
-    }
+
+    addPost(text: string) {
+        this.state.profilePage.posts.push({id: new Date().toString(), text, likes: 0})
+        this.callSubscriber()
+        this.state.profilePage.textForPost = ''
+    },
+    changeTextForPost(text: string) {
+        this.state.profilePage.textForPost = text
+        this.callSubscriber()
+    },
+    subscribe(observer: () => void) {
+        this.callSubscriber = observer
+    },
+    callSubscriber() {
+        console.log('state has changed')
+    },
 }
-let rerenderTree = ()=>{
-    console.log('state has changed')
-}
-export const addPost = (text: string) => {
-    store.profilePage.posts.push({id: new Date().toString(), text, likes: 0})
-    rerenderTree()
-    store.profilePage.textForPost = ''
-}
-export const changeTextForPost = (text: string) => {
-    store.profilePage.textForPost = text
-    rerenderTree()
-}
-export const subscribe = (observer:any) => {
-  rerenderTree = observer
-}
+
 // @ts-ignore
 window.state = store

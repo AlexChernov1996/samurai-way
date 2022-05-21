@@ -2,7 +2,7 @@ import React from 'react';
 import styles from "./profile.module.css"
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {changeTextForPost, ProfilePageType} from "../../state/State";
+import {ProfilePageType} from "../../state/State";
 type ProfilePropsType = {
     profilePage: ProfilePageType
     addPost:(text:string)=>void
