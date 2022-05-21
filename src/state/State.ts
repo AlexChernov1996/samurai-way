@@ -24,14 +24,25 @@ export type StateType = {
     profilePage: ProfilePageType
 }
 export type StoreType = {
-    state: StateType
+    _state: StateType
     callSubscriber: () => void
-    addPost: (text: string) => void
     changeTextForPost: (text: string) => void
-    subscribe: (observer:() => void) => void
+    subscribe: (observer: () => void) => void
+    getState: () => StateType
+    addPost: (text: string) => void
+    dispatch: (action: ActionType) => void
 }
+type AddPostActionType = {
+    type: "ADD-POST"
+}
+type ChangeTextForPostActionType = {
+    type: 'CHANGE-TEXT-FOR-POST'
+    text: string
+}
+export type ActionType = ChangeTextForPostActionType | AddPostActionType
+
 export const store = {
-    state: {
+    _state: {
         dialogsPage: {
             dialogs: [
                 {id: '1', name: 'Dima'},
@@ -53,15 +64,8 @@ export const store = {
             textForPost: "It-kamasutra"
         }
     },
-
-    addPost(text: string) {
-        this.state.profilePage.posts.push({id: new Date().toString(), text, likes: 0})
-        this.callSubscriber()
-        this.state.profilePage.textForPost = ''
-    },
-    changeTextForPost(text: string) {
-        this.state.profilePage.textForPost = text
-        this.callSubscriber()
+    getState() {
+        return this._state
     },
     subscribe(observer: () => void) {
         this.callSubscriber = observer
@@ -69,6 +73,29 @@ export const store = {
     callSubscriber() {
         console.log('state has changed')
     },
+    changeTextForPost(text: string) {
+        this.getState().profilePage.textForPost = text
+        this.callSubscriber()
+    },
+    addPost(text: string) {
+        this.getState().profilePage.posts.push({id: new Date().toString(), text, likes: 0})
+        this.callSubscriber()
+        this.getState().profilePage.textForPost = ''
+    },
+    dispatch(action: ActionType) {
+        if (action.type === 'ADD-POST') {
+            this.getState().profilePage.posts.push({
+                id: new Date().toString(),
+                text: this.getState().profilePage.textForPost,
+                likes: 0
+            })
+            this.callSubscriber()
+            this.getState().profilePage.textForPost = ''
+        } else if (action.type === 'CHANGE-TEXT-FOR-POST') {
+            this.getState().profilePage.textForPost = action.text
+            this.callSubscriber()
+        }
+    }
 }
 
 // @ts-ignore

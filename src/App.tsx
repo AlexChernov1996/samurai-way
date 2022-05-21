@@ -16,13 +16,12 @@ function App(props: AppPropsType) {
         <div className="App">
             <Header/>
             <Navbar/>
-            <Route render={() => <Profile profilePage={props.store.state.profilePage}
-                                          addPost={props.store.addPost.bind(props.store)}
-                                          changeTextForPost={props.store.changeTextForPost.bind(props.store)}
+            <Route render={() => <Profile profilePage={props.store.getState().profilePage}
+                                          dispatch={props.store.dispatch.bind(props.store)}
             />}
                    path={'/profile'}
             />
-            <Route render={() => <Dialogs dialogsPage={props.store.state.dialogsPage}/>} path={'/dialogs'}/>
+            <Route render={() => <Dialogs dialogsPage={props.store.getState().dialogsPage}/>} path={'/dialogs'}/>
         </div>
     );
 }
