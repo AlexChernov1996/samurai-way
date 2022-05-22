@@ -21,7 +21,10 @@ function App(props: AppPropsType) {
             />}
                    path={'/profile'}
             />
-            <Route render={() => <Dialogs dialogsPage={props.store.getState().dialogsPage}/>} path={'/dialogs'}/>
+            <Route render={() => <Dialogs dialogsPage={props.store.getState().dialogsPage}
+                                          dispatch={props.store.dispatch.bind(props.store)}
+
+            />} path={'/dialogs'}/>
         </div>
     );
 }

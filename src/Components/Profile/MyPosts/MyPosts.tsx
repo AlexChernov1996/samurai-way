@@ -1,20 +1,21 @@
 import React from 'react';
 import s from "./my_posts.module.css"
 import Post from "./Post/Post";
-import {ActionType, PostType} from "../../../state/State";
+import {ActionTypes, PostType} from "../../../state/State";
+import {addPostAC, changeTextForPostAC} from "../../../state/profileReducer";
 
 type MyPostsPropsType = {
     posts: PostType[]
     textForPost: string
-    dispatch: (action: ActionType) => void
+    dispatch: (action: ActionTypes) => void
 }
 const MyPosts = (props: MyPostsPropsType) => {
     let textForNewPost = React.createRef<HTMLTextAreaElement>()
     const addPost = () => {
-        props.dispatch({type: 'ADD-POST'})
+        props.dispatch(addPostAC())
     }
     const updateTextForPost = () => {
-        props.dispatch({type: 'CHANGE-TEXT-FOR-POST', text: textForNewPost.current?.value!})
+        props.dispatch(changeTextForPostAC(textForNewPost.current?.value!))
     }
     return (
         <div>

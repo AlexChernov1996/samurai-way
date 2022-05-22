@@ -14,6 +14,7 @@ users:hover{
     color: white
 }
 .messages{
+    display: block;
     padding: 5px;
 }
 

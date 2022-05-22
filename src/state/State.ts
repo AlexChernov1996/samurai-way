@@ -1,3 +1,6 @@
+import {profileReducer} from "./profileReducer";
+import {dialogsReducer} from "./dialogsReducer";
+
 export type DialogsType = {
     id: string
     name: string
@@ -14,6 +17,7 @@ export type PostType = {
 export type DialogsPageType = {
     dialogs: DialogsType[]
     messages: MessagesType[]
+    textForNewMessage: string
 }
 export type ProfilePageType = {
     posts: PostType[]
@@ -26,21 +30,29 @@ export type StateType = {
 export type StoreType = {
     _state: StateType
     callSubscriber: () => void
-    changeTextForPost: (text: string) => void
     subscribe: (observer: () => void) => void
     getState: () => StateType
-    addPost: (text: string) => void
-    dispatch: (action: ActionType) => void
+    dispatch: (action: ActionTypes) => void
 }
-type AddPostActionType = {
+export type AddPostActionType = {
     type: "ADD-POST"
 }
-type ChangeTextForPostActionType = {
+export type ChangeTextForPostActionType = {
     type: 'CHANGE-TEXT-FOR-POST'
     text: string
 }
-export type ActionType = ChangeTextForPostActionType | AddPostActionType
-
+export type AddMessageActionType = {
+    type: "ADD-MESSAGE"
+}
+export type ChangeTextForMessageActionType = {
+    type: 'CHANGE-TEXT-FOR-MESSAGE'
+    text: string
+}
+export type ActionTypes =
+    ChangeTextForPostActionType
+    | AddPostActionType
+    | AddMessageActionType
+    | ChangeTextForMessageActionType
 export const store = {
     _state: {
         dialogsPage: {
@@ -54,14 +66,15 @@ export const store = {
                 {id: '1', text: 'Lorem ipsum.'},
                 {id: '2', text: 'Lorem ipsum12331.'},
                 {id: '3', text: 'Lorem ipsum12311ddfwe dfss.'},
-            ]
+            ],
+            textForNewMessage: '1111'
         },
         profilePage: {
             posts: [
                 {id: '1', text: 'Lorem ipsum dolor sit.', likes: 4},
                 {id: '2', text: 'Lorem ipsum dolor sit.', likes: 2},
             ],
-            textForPost: "It-kamasutra"
+            textForPost: ""
         }
     },
     getState() {
@@ -73,28 +86,11 @@ export const store = {
     callSubscriber() {
         console.log('state has changed')
     },
-    changeTextForPost(text: string) {
-        this.getState().profilePage.textForPost = text
+
+    dispatch(action: ActionTypes) {
+        profileReducer(this.getState().profilePage, action)
+        dialogsReducer(this.getState().dialogsPage, action)
         this.callSubscriber()
-    },
-    addPost(text: string) {
-        this.getState().profilePage.posts.push({id: new Date().toString(), text, likes: 0})
-        this.callSubscriber()
-        this.getState().profilePage.textForPost = ''
-    },
-    dispatch(action: ActionType) {
-        if (action.type === 'ADD-POST') {
-            this.getState().profilePage.posts.push({
-                id: new Date().toString(),
-                text: this.getState().profilePage.textForPost,
-                likes: 0
-            })
-            this.callSubscriber()
-            this.getState().profilePage.textForPost = ''
-        } else if (action.type === 'CHANGE-TEXT-FOR-POST') {
-            this.getState().profilePage.textForPost = action.text
-            this.callSubscriber()
-        }
     }
 }
 
