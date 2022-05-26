@@ -3,6 +3,7 @@ import styles from "./profile.module.css"
 import MyPosts from "./MyPosts/MyPosts";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import {ActionTypes, ProfilePageType} from "../../state/State";
+import ContainerMyPosts from './MyPosts/ContainerMyPosts';
 type ProfilePropsType = {
     profilePage: ProfilePageType
     dispatch:(action:ActionTypes)=>void
@@ -11,9 +12,7 @@ const Profile = (props:ProfilePropsType) => {
     return (
         <div className={styles.profile}>
          <ProfileInfo/>
-            <MyPosts posts = {props.profilePage.posts}
-                     textForPost = {props.profilePage.textForPost}
-                     dispatch={props.dispatch}
+            <ContainerMyPosts
             />
         </div>
     );

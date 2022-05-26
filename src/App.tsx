@@ -5,10 +5,15 @@ import Header from "./Components/Header/Header";
 import Profile from "./Components/Profile/Profile";
 import Dialogs from "./Components/Dialogs/Dialogs";
 import {Route} from "react-router-dom";
-import {StoreType} from "./state/State";
+import {ReducersType} from "./state/store";
+import {Dispatch} from "redux";
+import {ActionTypes} from "./state/State";
+import DialogsContainer from "./Components/Dialogs/DialogsContainer";
+
 
 type AppPropsType = {
-    store: StoreType
+    store: ReducersType
+    dispatch: Dispatch<ActionTypes>
 }
 
 function App(props: AppPropsType) {
@@ -16,15 +21,12 @@ function App(props: AppPropsType) {
         <div className="App">
             <Header/>
             <Navbar/>
-            <Route render={() => <Profile profilePage={props.store.getState().profilePage}
-                                          dispatch={props.store.dispatch.bind(props.store)}
+            <Route render={() => <Profile profilePage={props.store.profilePage}
+                                          dispatch={props.dispatch.bind(props.store)}
             />}
                    path={'/profile'}
             />
-            <Route render={() => <Dialogs dialogsPage={props.store.getState().dialogsPage}
-                                          dispatch={props.store.dispatch.bind(props.store)}
-
-            />} path={'/dialogs'}/>
+            <Route render={() => <DialogsContainer/>} path={'/dialogs'}/>
         </div>
     );
 }

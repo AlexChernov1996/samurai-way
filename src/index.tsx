@@ -1,14 +1,17 @@
 import ReactDOM from "react-dom";
 import {BrowserRouter} from "react-router-dom";
 import App from "./App";
-import {store} from "./state/State";
+import {ReducersType, store} from "./state/store";
 import React from "react";
-let callSubscriber = ()=>{
+let callSubscriber = (state:ReducersType)=>{
     ReactDOM.render(
         <BrowserRouter>
-            <App store={store}/>
+            <App dispatch={store.dispatch} store={store.getState()}/>
         </BrowserRouter>,
         document.getElementById('root')
     );}
-store.subscribe(callSubscriber)
-store.callSubscriber()
+callSubscriber(store.getState())
+store.subscribe(()=> {
+    let state = store.getState()
+    callSubscriber(state)
+})

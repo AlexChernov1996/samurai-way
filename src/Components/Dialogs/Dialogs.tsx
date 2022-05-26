@@ -7,14 +7,15 @@ import {addMessageAC, changeTextForMessageAC} from "../../state/dialogsReducer";
 
 type DialogsPropsType = {
     dialogsPage: DialogsPageType
-    dispatch: (action: ActionTypes) => void
+    addMessage: () => void
+    changeTextForMessage :(text:string)=>void
 }
 const Dialogs = (props: DialogsPropsType) => {
 const changeMessageTextHandler =(e:ChangeEvent<HTMLTextAreaElement>) => {
-    props.dispatch(changeTextForMessageAC(e.currentTarget.value))
+    props.changeTextForMessage(e.currentTarget.value)
 }
 const addNewMessage =()=>{
-    props.dispatch(addMessageAC())
+    props.addMessage()
 }
 
     return (
