@@ -6,6 +6,7 @@ const reducers = combineReducers({
     dialogsPage:dialogsReducer,
     profilePage:profileReducer
 })
-export const store = createStore(reducers)
 
+export const store = createStore(reducers)
+export type StoreTypeOf = typeof store
 export type ReducersType = ReturnType<typeof reducers>

@@ -28,7 +28,7 @@ export type StateType = {
     profilePage: ProfilePageType
 }
 export type StoreType = {
-    _state: StateType
+    state: StateType
     callSubscriber: () => void
     subscribe: (observer: () => void) => void
     getState: () => StateType

@@ -11,19 +11,13 @@ import {ActionTypes} from "./state/State";
 import DialogsContainer from "./Components/Dialogs/DialogsContainer";
 
 
-type AppPropsType = {
-    store: ReducersType
-    dispatch: Dispatch<ActionTypes>
-}
 
-function App(props: AppPropsType) {
+function App() {
     return (
         <div className="App">
             <Header/>
             <Navbar/>
-            <Route render={() => <Profile profilePage={props.store.profilePage}
-                                          dispatch={props.dispatch.bind(props.store)}
-            />}
+            <Route render={() => <Profile/>}
                    path={'/profile'}
             />
             <Route render={() => <DialogsContainer/>} path={'/dialogs'}/>
