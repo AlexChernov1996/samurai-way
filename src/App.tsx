@@ -3,11 +3,8 @@ import './App.css';
 import Navbar from "./Components/Navbar/Navbar";
 import Header from "./Components/Header/Header";
 import Profile from "./Components/Profile/Profile";
-import Dialogs from "./Components/Dialogs/Dialogs";
 import {Route} from "react-router-dom";
-import {ReducersType} from "./state/store";
-import {Dispatch} from "redux";
-import {ActionTypes} from "./state/State";
+
 import DialogsContainer from "./Components/Dialogs/DialogsContainer";
 
 

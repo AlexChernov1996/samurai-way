@@ -3,8 +3,8 @@ import {BrowserRouter} from "react-router-dom";
 import App from "./App";
 import {store} from "./state/store";
 import React from "react";
-import {Provider} from "./Context";
 import {StateType} from "./state/State";
+import {Provider} from "react-redux";
 
 let callSubscriber = (state: StateType) => {
     ReactDOM.render(
