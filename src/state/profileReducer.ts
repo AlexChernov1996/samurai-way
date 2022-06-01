@@ -1,5 +1,6 @@
 import {ActionTypes, AddPostActionType, ChangeTextForPostActionType, ProfilePageType} from "./State";
-const initState ={
+
+const initState = {
     posts: [
         {id: '1', text: 'Lorem ipsum dolor sit.', likes: 4},
         {id: '2', text: 'Lorem ipsum dolor sit.', likes: 2},
@@ -10,16 +11,18 @@ const initState ={
 export const profileReducer = (state: ProfilePageType = initState, action: ActionTypes) => {
     switch (action.type) {
         case 'ADD-POST':
-            state.posts.push({
-                id: new Date().toString(),
-                text: state.textForPost,
-                likes: 0
-            })
-            state.textForPost = ''
+            let copy = {
+                ...state, posts: [{
+                    id: new Date().toString(),
+                    text: state.textForPost,
+                    likes: 0
+                }, ...state.posts]
+            }
+            copy.textForPost = ''
+            return copy
             return state
         case 'CHANGE-TEXT-FOR-POST':
-            state.textForPost = action.text
-            return state
+            return {...state, textForPost: action.text}
         default:
             return state
     }
