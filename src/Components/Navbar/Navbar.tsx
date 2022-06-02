@@ -8,7 +8,7 @@ const Navbar = () => {
             <NavLink className={() => styles.list} activeClassName={styles.listActive}
                      to="/profile">Profile</NavLink>
             <NavLink className={() => styles.list} activeClassName={styles.listActive}
-                     to="/friends">Friends</NavLink>
+                     to="/users">Friends</NavLink>
             <NavLink className={() => styles.list} activeClassName={styles.listActive}
                      to="/dialogs"> Dialogs</NavLink>
             <NavLink className={() => styles.list} activeClassName={styles.listActive}

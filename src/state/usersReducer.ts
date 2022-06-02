@@ -1,13 +1,13 @@
-type FullNameType = {
+export type FullNameType = {
     name: string
     secondName?: string
     surname: string
 }
-type PlaceType = {
+export type PlaceType = {
     country?: string
     city?: string
 }
-type UserType = {
+export type UserType = {
     id: string
     status: string
     fullName: FullNameType
@@ -26,7 +26,7 @@ type GetUsers = {
 const initState =
     [
         {
-            id: new Date().getTime().toString(),
+            id: new Date().getTime().toString() +'1',
             status: 'Creator',
             fullName: {name: 'Alex', surname: 'Chernov'},
             place: {country: 'Ukraine', city: 'Odessa'},
@@ -34,7 +34,7 @@ const initState =
             followed: true
         },
         {
-            id: new Date().getTime().toString(),
+            id: new Date().getTime().toString() + '3',
             status: 'not the Creator',
             fullName: {name: 'Valera', surname: 'Yankoviy'},
             place: {country: 'Ukraine', city: 'Odessa'},
@@ -42,7 +42,7 @@ const initState =
             followed: false
         },
         {
-            id: new Date().getTime().toString(),
+            id: new Date().getTime().toString() + '5',
             status: 'not the Creator',
             fullName: {name: 'Andrey', surname: 'Kolomiets'},
             place: {country: 'Ukraine', city: 'Kerch'},
@@ -52,14 +52,16 @@ const initState =
     ]
 
 type ActionTypes = FollowAT | GetUsers
-export const usersReducer = (state: UserType[] = initState, action: ActionTypes) => {
+export const usersReducer = (state: UserType[] = initState, action: ActionTypes): UserType[] => {
     switch (action.type) {
         case 'FOLLOW':
             return state.map(u => u.id === action.payload.id ? {...u, followed: true} : u)
         case 'UNFOLLOW':
             return state.map(u => u.id === action.payload.id ? {...u, followed: false} : u)
         case 'GET-USERS':
-            return [...state, action.payload.users]
+            return state.concat(action.payload.users)
+        default:
+            return state
     }
 }
 export const FollowAC = (id: string): FollowAT => ({type: "FOLLOW", payload: {id}})
