@@ -1,40 +1,46 @@
 import React from 'react';
-import {FullNameType, PlaceType, UserType} from "../../state/usersReducer";
+import {UserType} from "../../state/usersReducer";
 import s from "./users.module.css"
+import axios from "axios";
 
 type UsersPropsType = {
     users: UserType[]
-    follow: (id: string) => void
-    unFollow: (id: string) => void
+    follow: (id: number) => void
+    unFollow: (id: number) => void
     getUsers: (users: UserType[]) => void
 }
-const Users = (props: UsersPropsType) => {
-    const getFullName = (fullName: FullNameType): string => {
-        return `${fullName.name} ${fullName.secondName || ''} ${fullName.surname}`
+
+export const Users = (props: UsersPropsType) => {
+    if (props.users.length === 0) {
+        axios.get("https://social-network.samuraijs.com/api/1.0/users").then(res => {
+            props.getUsers(res.data.items)
+        })
     }
-    const getAddress = (address: PlaceType): string => {
-        return `${address.country || ''} ${address.city || ''}`
-    }
-    return (<div>
-        {props.users.map(u => {
-            return <div className={s.wrapper} key={u.id}>
-                <div className={s.ava_follow}><img src={u.ava} alt="avatar"/>
+    return <div>
+        {props.users.map((u) => {
+            return (<div className={s.wrapper} key={u.id}>
+                <div className={s.ava_follow}>
+                    <img
+                        src={u.photos.small || 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png'}
+                        alt="avatar"/>
                     {u.followed
                         ? <button onClick={() => props.unFollow(u.id)}>Unfollow</button>
                         : <button onClick={() => props.follow(u.id)}>Follow</button>
                     }
                 </div>
                 <div className={s.name_status}>
-                    <h3>{getFullName(u.fullName)}</h3>
+                    <h3>{u.name}</h3>
                     <p>{u.status}</p>
                 </div>
-                <div className={s.address}>
-                    <p>{u.place && getAddress(u.place)}</p>
-                </div>
-            </div>
-        })}
+                <div className={s.address}>adress</div>
+            </div>)
+        })
+        }
 
-    </div>);
-};
+    </div>
+}
 
-export default Users;
+
+
+
+

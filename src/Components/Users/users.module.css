@@ -1,6 +1,7 @@
 .wrapper{
  width: 90%;
     height: 30%;
+    max-height: 150px;
     border: 1px solid seagreen ;
     margin: 10px;
     display: flex;
