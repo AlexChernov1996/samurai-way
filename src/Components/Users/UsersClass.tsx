@@ -1,24 +1,44 @@
 import {UserType} from "../../state/usersReducer";
-import React from "react";
+import React, {ChangeEvent} from "react";
 import s from "./users.module.css";
 import axios from "axios";
 
 type UsersPropsType = {
     users: UserType[]
+    count: number
+    totalUsersCount: number
+    currentPage: number
     follow: (id: number) => void
     unFollow: (id: number) => void
     getUsers: (users: UserType[]) => void
+    getTotalUsersCount: (usersCount: number) => void
+    setCurrentPage: (value: number) => void
 }
 
 export class UsersClass extends React.Component<UsersPropsType, {}> {
     componentDidMount() {
-        axios.get("https://social-network.samuraijs.com/api/1.0/users").then(res => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.count}&page=${this.props.currentPage}`).then(res => {
+            this.props.getUsers(res.data.items)
+            this.props.getTotalUsersCount(res.data.totalCount)
+        })
+    }
+
+    setCurrentPageHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        this.props.setCurrentPage(+e.currentTarget.value)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.count}&page=${e.currentTarget.value}`).then(res => {
             this.props.getUsers(res.data.items)
         })
     }
 
     render() {
+        let allPages = Math.ceil(this.props.totalUsersCount / this.props.count)
+        let pages = []
+        for (let i = 1; i < allPages; i++) {
+            pages.push(i)
+        }
         return <div>
+            <input type="range" value={this.props.currentPage} onChange={this.setCurrentPageHandler}
+                   max={pages[pages.length - 1]}/> {this.props.currentPage}
             {this.props.users.map((u) => {
                 return (<div className={s.wrapper} key={u.id}>
                     <div className={s.ava_follow}>
@@ -38,7 +58,6 @@ export class UsersClass extends React.Component<UsersPropsType, {}> {
                 </div>)
             })
             }
-
         </div>;
     }
 }
