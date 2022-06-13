@@ -39,7 +39,7 @@ export const Users = (props: UsersPropsType) => {
                     <h3>{u.name}</h3>
                     <p>{u.status}</p>
                 </div>
-                <div className={s.address}>adress</div>
+                <div className={s.address}>address</div>
             </div>)
         })
         }

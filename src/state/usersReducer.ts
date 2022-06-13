@@ -25,7 +25,7 @@ type GetUsersAT = {
     type: "GET-USERS"
     payload: { users: UserType[] }
 }
-type SetFetchingAT = ReturnType<typeof SetFetchingAC>
+type SetFetchingAT = ReturnType<typeof setFetching>
 export type UsersStateType = {
     users: UserType[]
     count: number //How many users we see in one page
@@ -60,12 +60,12 @@ export const usersReducer = (state: UsersStateType = initState, action: ActionTy
             return state
     }
 }
-export const FollowAC = (id: number): FollowAT => ({type: "FOLLOW", payload: {id}})
-export const GetTotalUsersCountAC = (usersCount: number): GetTotalUsersCountAT => ({
+export const follow = (id: number): FollowAT => ({type: "FOLLOW", payload: {id}})
+export const getTotalUsersCount = (usersCount: number): GetTotalUsersCountAT => ({
     type: "GET-TOTAL-USERS-COUNT",
     payload: {usersCount}
 })
-export const UnFollowAC = (id: number): FollowAT => ({type: "UNFOLLOW", payload: {id}})
-export const GetUsersAC = (users: UserType[]): GetUsersAT => ({type: "GET-USERS", payload: {users}})
-export const SetCurrentPageAC = (value: number): SetCurrentPageAT => ({type: "SET-CURRENT-PAGE", payload: {value}})
-export const SetFetchingAC = (value: boolean) => ({type: "SET-FETCHING-PAGE", payload: {value}} as const)
+export const unFollow = (id: number): FollowAT => ({type: "UNFOLLOW", payload: {id}})
+export const getUsers = (users: UserType[]): GetUsersAT => ({type: "GET-USERS", payload: {users}})
+export const setCurrentPage = (value: number): SetCurrentPageAT => ({type: "SET-CURRENT-PAGE", payload: {value}})
+export const setFetching = (value: boolean) => ({type: "SET-FETCHING-PAGE", payload: {value}} as const)
