@@ -1,22 +1,29 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import {UserType} from "../../state/usersReducer";
 import s from "./users.module.css"
-import axios from "axios";
+import Preloader from "../CommonComponents/Preloader";
 
 type UsersPropsType = {
     users: UserType[]
     follow: (id: number) => void
     unFollow: (id: number) => void
-    getUsers: (users: UserType[]) => void
+    totalUsersCount:number
+    count:number
+    currentPage:number
+    setCurrentPageHandler:(e: ChangeEvent<HTMLInputElement>)=>void
+    isFetching:boolean
 }
 
 export const Users = (props: UsersPropsType) => {
-    if (props.users.length === 0) {
-        axios.get("https://social-network.samuraijs.com/api/1.0/users").then(res => {
-            props.getUsers(res.data.items)
-        })
+    let allPages = Math.ceil(props.totalUsersCount / props.count)
+    let pages = []
+    for (let i = 1; i < allPages; i++) {
+        pages.push(i)
     }
     return <div>
+        <Preloader isActive={props.isFetching}/>
+        <input type="range" value={props.currentPage} onChange={props.setCurrentPageHandler}
+               max={pages[pages.length-1]} /> {props.currentPage}
         {props.users.map((u) => {
             return (<div className={s.wrapper} key={u.id}>
                 <div className={s.ava_follow}>
@@ -36,8 +43,7 @@ export const Users = (props: UsersPropsType) => {
             </div>)
         })
         }
-
-    </div>
+    </div>;
 }
 
 

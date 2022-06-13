@@ -1,0 +1,8 @@
+.active{
+    position: absolute;
+    top: 50%;
+    right: 50%;
+}
+.disabled{
+    display: none;
+}
