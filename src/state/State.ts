@@ -1,5 +1,4 @@
-import {profileReducer} from "./profileReducer";
-import {dialogsReducer} from "./dialogsReducer";
+import {SetUserInfoAT} from "./profileReducer";
 
 export type DialogsType = {
     id: string
@@ -19,7 +18,31 @@ export type DialogsPageType = {
     messages: MessagesType[]
     textForNewMessage: string
 }
+export type contactsUserInfoType = {
+    facebook: string | null
+    website: string | null
+    vk: string | null
+    twitter: string | null
+    instagram: string | null
+    youtube: string | null
+    github: string | null
+    mainLink: string | null
+}
+export type photosUserInfoType = {
+    small: string | null
+    large: string | null
+}
+export type UserInfoType = {
+        aboutMe: string | null
+        contacts: contactsUserInfoType
+        lookingForAJob: boolean | null
+        lookingForAJobDescription: string | null
+        fullName: string
+        userId: number
+        photos: photosUserInfoType
+}
 export type ProfilePageType = {
+    userInfo: UserInfoType
     posts: PostType[]
     textForPost: string
 }
@@ -27,13 +50,7 @@ export type StateType = {
     dialogsPage: DialogsPageType
     profilePage: ProfilePageType
 }
-export type StoreType = {
-    state: StateType
-    callSubscriber: () => void
-    subscribe: (observer: () => void) => void
-    getState: () => StateType
-    dispatch: (action: ActionTypes) => void
-}
+
 export type AddPostActionType = {
     type: "ADD-POST"
 }
@@ -53,6 +70,7 @@ export type ActionTypes =
     | AddPostActionType
     | AddMessageActionType
     | ChangeTextForMessageActionType
+|SetUserInfoAT
 export const store = {
     _state: {
         dialogsPage: {
@@ -70,6 +88,27 @@ export const store = {
             textForNewMessage: '1111'
         },
         profilePage: {
+            userInfo: {
+                aboutMe: "я круто чувак 1001%",
+                contacts: {
+                    facebook: "facebook.com",
+                    website: null,
+                    vk: "vk.com/dimych",
+                    twitter: "https://twitter.com/@sdf",
+                    instagram: "instagra.com/sds",
+                    youtube: null,
+                    github: "github.com",
+                    mainLink: null
+                },
+                lookingForAJob: true,
+                lookingForAJobDescription: "не ищу, а дурачусь",
+                fullName: "samurai dimych",
+                userId: 2,
+                photos: {
+                    small: "https://social-network.samuraijs.com/activecontent/images/users/2/user-small.jpg?v=0",
+                    large: "https://social-network.samuraijs.com/activecontent/images/users/2/user.jpg?v=0"
+                }
+            },
             posts: [
                 {id: '1', text: 'Lorem ipsum dolor sit.', likes: 4},
                 {id: '2', text: 'Lorem ipsum dolor sit.', likes: 2},
@@ -87,11 +126,7 @@ export const store = {
         console.log('state has changed')
     },
 
-    dispatch(action: ActionTypes) {
-        profileReducer(this.getState().profilePage, action)
-        dialogsReducer(this.getState().dialogsPage, action)
-        this.callSubscriber()
-    }
+
 }
 
 // @ts-ignore

@@ -14,7 +14,7 @@ function App() {
             <Header/>
             <Navbar/>
             <Route render={() => <Profile/>}
-                   path={'/profile'}
+                   path={'/profile/:userId'}
             />
             <Route render={() => <DialogsContainer/>} path={'/dialogs'}/>
             <Route render={() => <UsersContainer/>} path={'/users'}/>
