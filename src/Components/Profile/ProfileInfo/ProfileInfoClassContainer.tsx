@@ -18,10 +18,10 @@ export  type ProfileInfoContainerPropsType = RouteComponentProps<PathParamsType>
 
 class ProfileInfoClassContainer extends React.Component <ProfileInfoContainerPropsType, {}> {
     componentDidMount() {
-        debugger
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${this.props.match.params.userId}`).then((res) => {
-            this.props.setUser(res.data)
-        })
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${this.props.match.params.userId}`)
+            .then((res) => {
+                this.props.setUser(res.data)
+            })
     }
 
     render() {

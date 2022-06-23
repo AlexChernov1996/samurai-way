@@ -5,6 +5,7 @@ import {ProfileInfoContainer} from "./ProfileInfo/ProfileInfoClassContainer";
 
 
 const Profile = () => {
+
     return (
         <div className={styles.profile}>
          <ProfileInfoContainer  />

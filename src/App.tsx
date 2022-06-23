@@ -6,12 +6,13 @@ import Profile from "./Components/Profile/Profile";
 import {Route} from "react-router-dom";
 import DialogsContainer from "./Components/Dialogs/DialogsContainer";
 import {UsersContainer} from "./Components/Users/UsersContainer";
+import HeaderContainer from "./Components/Header/HeaderContainer";
 
 
 function App() {
     return (
         <div className="App">
-            <Header/>
+            <HeaderContainer/>
             <Navbar/>
             <Route render={() => <Profile/>}
                    path={'/profile/:userId'}
