@@ -25,7 +25,7 @@ export const Users = (props: UsersPropsType) => {
     return <div>
         <Preloader isActive={props.isFetching}/>
         <input type="range" value={props.currentPage} onChange={props.setCurrentPageHandler}
-               max={pages[pages.length - 1]}/> {props.currentPage}
+               max={pages[pages.length - 1]} min={1}/> {props.currentPage}
         {props.users.map((u) => {
             return (<div className={s.wrapper} key={u.id}>
                 <div className={s.ava_follow}>

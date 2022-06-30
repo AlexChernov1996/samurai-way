@@ -8,8 +8,8 @@ import {
 } from "../../state/usersReducer";
 import {AppStateType} from "../../state/store";
 import React, {ChangeEvent} from "react";
-import axios from "axios";
 import {Users} from "./Users";
+import {usersApi} from "../../api/users-api";
 
 type MapStateToPropsType = {
     users: UserType[]
@@ -18,14 +18,6 @@ type MapStateToPropsType = {
     totalUsersCount: number
     isFetching: boolean
 }
-// type MapDispatchToPropsType = {
-//     follow: (id: number) => void
-//     unFollow: (id: number) => void
-//     getUsers: (users: UserType[]) => void
-//     getTotalUsersCount: (usersCount: number) => void
-//     setCurrentPage: (value: number) => void
-//     setFetching: (value: boolean) => void
-// }
 type UsersPropsType = {
     users: UserType[]
     count: number
@@ -43,11 +35,9 @@ type UsersPropsType = {
 export class UsersContainerCC extends React.Component <UsersPropsType, {}> {
     componentDidMount() {
         this.props.setFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.count}&page=${this.props.currentPage}`,
-            {withCredentials:true}
-            ).then(res => {
-            this.props.getUsers(res.data.items)
-            this.props.getTotalUsersCount(res.data.totalCount)
+        usersApi.getUsers(this.props.count,this.props.currentPage).then(res => {
+            this.props.getUsers(res.items)
+            this.props.getTotalUsersCount(res.totalCount)
             this.props.setFetching(false)
         })
     }
@@ -55,11 +45,10 @@ export class UsersContainerCC extends React.Component <UsersPropsType, {}> {
     setCurrentPageHandler = (e: ChangeEvent<HTMLInputElement>) => {
         this.props.setFetching(true)
         this.props.setCurrentPage(+e.currentTarget.value)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.count}&page=${e.currentTarget.value}`,
-            {withCredentials:true}
-            ).then(res => {
+        usersApi.getUsers(this.props.count,+e.currentTarget.value)
+        .then(res => {
             this.props.setFetching(false)
-            this.props.getUsers(res.data.items)
+            this.props.getUsers(res.items)
         })
     }
 
