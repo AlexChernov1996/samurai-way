@@ -4,6 +4,7 @@ import s from "./users.module.css"
 import Preloader from "../CommonComponents/Preloader";
 import {NavLink} from 'react-router-dom';
 import axios from "axios";
+import {usersApi} from "../../api/users-api";
 
 type UsersPropsType = {
     users: UserType[]
@@ -14,6 +15,8 @@ type UsersPropsType = {
     currentPage: number
     setCurrentPageHandler: (e: ChangeEvent<HTMLInputElement>) => void
     isFetching: boolean
+    isFollowing: number[]
+    setIsFollowing: (value: boolean, id: number) => void
 }
 
 export const Users = (props: UsersPropsType) => {
@@ -33,32 +36,29 @@ export const Users = (props: UsersPropsType) => {
                         src={u.photos.small || 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png'}
                         alt="avatar"/></NavLink>
                     {u.followed
-                        ? <button onClick={() => {
-                            axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
-                                withCredentials: true,
-                                headers: {
-                                    "API-KEY": "f44de11a-0b43-4d14-9d1c-b85ca62809f9"
-                                }
-                            }).then((res) => {
-                                if (res.data.resultCode === 0) {
-                                    props.unFollow(u.id)
-                                }
-                            })
-                        }
-                        }>unFollow</button>
-                        : <button onClick={() => {
-                            axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {},{
-                                withCredentials: true,
-                                headers: {
-                                    "API-KEY": "f44de11a-0b43-4d14-9d1c-b85ca62809f9"
-                                }
-                            }).then((res) => {
-                                if (res.data.resultCode === 0) {
-                                    props.follow(u.id)
-                                }
-                            })
-                        }
-                        }>Follow</button>
+                        ? <button disabled={props.isFollowing.some((id) => id === u.id)}
+                                  onClick={() => {
+                                      props.setIsFollowing(true, u.id)
+                                      usersApi.unFollow(u.id)
+                                          .then((res) => {
+                                              if (res.data.resultCode === 0) {
+                                                  props.unFollow(u.id)
+                                                  props.setIsFollowing(false, u.id)
+                                              }
+                                          })
+                                  }
+                                  }>unFollow</button>
+                        : <button disabled={props.isFollowing.some((id) => id === u.id)}
+                                  onClick={() => {
+                                      props.setIsFollowing(true, u.id)
+                                      usersApi.follow(u.id).then((res) => {
+                                          if (res.data.resultCode === 0) {
+                                              props.follow(u.id)
+                                              props.setIsFollowing(false, u.id)
+                                          }
+                                      })
+                                  }
+                                  }>Follow</button>
                     }
                 </div>
                 <div className={s.name_status}>

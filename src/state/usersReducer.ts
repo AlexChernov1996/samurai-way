@@ -26,12 +26,14 @@ type GetUsersAT = {
     payload: { users: UserType[] }
 }
 type SetFetchingAT = ReturnType<typeof setFetching>
+type IsFollowing = ReturnType<typeof setIsFollowing>
 export type UsersStateType = {
     users: UserType[]
     count: number //How many users we see in one page
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    isFollowing: number[]
 }
 
 const initState: UsersStateType = {
@@ -39,9 +41,10 @@ const initState: UsersStateType = {
     count: 5,
     currentPage: 1,
     totalUsersCount: 0,
-    isFetching: false
+    isFetching: false,
+    isFollowing: []
 }
-type ActionTypes = FollowAT | GetUsersAT | GetTotalUsersCountAT | SetCurrentPageAT | SetFetchingAT
+type ActionTypes = FollowAT | GetUsersAT | GetTotalUsersCountAT | SetCurrentPageAT | SetFetchingAT | IsFollowing
 export const usersReducer = (state: UsersStateType = initState, action: ActionTypes): UsersStateType => {
     switch (action.type) {
         case 'FOLLOW':
@@ -56,6 +59,13 @@ export const usersReducer = (state: UsersStateType = initState, action: ActionTy
             return {...state, currentPage: action.payload.value}
         case "SET-FETCHING-PAGE":
             return {...state, isFetching: action.payload.value}
+        case "IS-FOLLOWING":
+            return {
+                ...state,
+                isFollowing: action.payload.value
+                    ? [...state.isFollowing, action.payload.id]
+                    : state.isFollowing.filter(id => id !== action.payload.id)
+            }
         default:
             return state
     }
@@ -69,3 +79,4 @@ export const unFollow = (id: number): FollowAT => ({type: "UNFOLLOW", payload: {
 export const getUsers = (users: UserType[]): GetUsersAT => ({type: "GET-USERS", payload: {users}})
 export const setCurrentPage = (value: number): SetCurrentPageAT => ({type: "SET-CURRENT-PAGE", payload: {value}})
 export const setFetching = (value: boolean) => ({type: "SET-FETCHING-PAGE", payload: {value}} as const)
+export const setIsFollowing = (value: boolean, id: number) => ({type: "IS-FOLLOWING", payload: {value, id}} as const)

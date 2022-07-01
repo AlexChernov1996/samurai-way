@@ -2,7 +2,7 @@ import {connect} from "react-redux";
 import {
     follow,
     getTotalUsersCount,
-    getUsers, setCurrentPage, setFetching,
+    getUsers, setIsFollowing, setCurrentPage, setFetching,
     unFollow,
     UserType
 } from "../../state/usersReducer";
@@ -17,6 +17,7 @@ type MapStateToPropsType = {
     currentPage: number
     totalUsersCount: number
     isFetching: boolean
+    isFollowing:number[]
 }
 type UsersPropsType = {
     users: UserType[]
@@ -30,6 +31,8 @@ type UsersPropsType = {
     getTotalUsersCount: (usersCount: number) => void
     setCurrentPage: (value: number) => void
     setFetching: (value: boolean) => void
+    isFollowing:number[]
+    setIsFollowing:(value:boolean,id:number)=>void
 }
 
 export class UsersContainerCC extends React.Component <UsersPropsType, {}> {
@@ -61,6 +64,9 @@ export class UsersContainerCC extends React.Component <UsersPropsType, {}> {
             currentPage={this.props.currentPage} setCurrentPageHandler={this.setCurrentPageHandler}
             totalUsersCount={this.props.totalUsersCount}
             isFetching={this.props.isFetching}
+            isFollowing={this.props.isFollowing}
+            setIsFollowing={this.props.setIsFollowing}
+
         />
     }
 }
@@ -72,8 +78,9 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
+        isFollowing:state.usersPage.isFollowing
     }
 }
 export const UsersContainer = connect(mapStateToProps, {
-    follow, unFollow, getUsers, getTotalUsersCount, setCurrentPage, setFetching
+    follow, unFollow, getUsers, getTotalUsersCount, setCurrentPage, setFetching,setIsFollowing
 })(UsersContainerCC)
