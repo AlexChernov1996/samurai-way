@@ -1,3 +1,5 @@
+import {headerApi} from "../api/header-api";
+
 export type authReducerType = {
     id: number | null
     login: string | null
@@ -32,5 +34,13 @@ export const setIsAuthValue = (isAuth:boolean) => ({
     type: "SET-IS-AUTH",
     isAuth
 } as const)
+export const getAuth = ()=>(dispatch:any)=>{
+    headerApi.getAuth().then(res => {
+        if( res.resultCode === 0){
+            let {email, id, login} = res.data
+            dispatch(setAuthUserData(id, login, email))}
+        dispatch(setIsAuthValue(true))
+    })
+}
 type IsAuthAT = ReturnType<typeof setIsAuthValue>
 type SetUserAT = ReturnType<typeof setAuthUserData>

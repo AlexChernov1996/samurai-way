@@ -3,12 +3,9 @@ import {UserType} from "../../state/usersReducer";
 import s from "./users.module.css"
 import Preloader from "../CommonComponents/Preloader";
 import {NavLink} from 'react-router-dom';
-import axios from "axios";
-import {usersApi} from "../../api/users-api";
 
 type UsersPropsType = {
     users: UserType[]
-    follow: (id: number) => void
     unFollow: (id: number) => void
     totalUsersCount: number
     count: number
@@ -17,6 +14,7 @@ type UsersPropsType = {
     isFetching: boolean
     isFollowing: number[]
     setIsFollowing: (value: boolean, id: number) => void
+    follow: (id: number) => void
 }
 
 export const Users = (props: UsersPropsType) => {
@@ -38,25 +36,12 @@ export const Users = (props: UsersPropsType) => {
                     {u.followed
                         ? <button disabled={props.isFollowing.some((id) => id === u.id)}
                                   onClick={() => {
-                                      props.setIsFollowing(true, u.id)
-                                      usersApi.unFollow(u.id)
-                                          .then((res) => {
-                                              if (res.data.resultCode === 0) {
-                                                  props.unFollow(u.id)
-                                                  props.setIsFollowing(false, u.id)
-                                              }
-                                          })
+                                      props.unFollow(u.id)
                                   }
                                   }>unFollow</button>
                         : <button disabled={props.isFollowing.some((id) => id === u.id)}
                                   onClick={() => {
-                                      props.setIsFollowing(true, u.id)
-                                      usersApi.follow(u.id).then((res) => {
-                                          if (res.data.resultCode === 0) {
-                                              props.follow(u.id)
-                                              props.setIsFollowing(false, u.id)
-                                          }
-                                      })
+                                      props.follow(u.id)
                                   }
                                   }>Follow</button>
                     }

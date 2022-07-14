@@ -1,3 +1,5 @@
+import {usersApi} from "../api/users-api";
+
 export type UserType = {
     "name": string,
     "id": number,
@@ -80,3 +82,29 @@ export const getUsers = (users: UserType[]): GetUsersAT => ({type: "GET-USERS", 
 export const setCurrentPage = (value: number): SetCurrentPageAT => ({type: "SET-CURRENT-PAGE", payload: {value}})
 export const setFetching = (value: boolean) => ({type: "SET-FETCHING-PAGE", payload: {value}} as const)
 export const setIsFollowing = (value: boolean, id: number) => ({type: "IS-FOLLOWING", payload: {value, id}} as const)
+export const getUsersTC = (count: number, currentPage: number) => (dispatch: any) => {
+    setFetching(true)
+    usersApi.getUsers(count, currentPage).then(res => {
+        dispatch(getUsers(res.items))
+        dispatch(getTotalUsersCount(res.totalCount))
+        dispatch(setFetching(false))
+    })
+}
+export const followTC = (id: number) => (dispatch: any) => {
+    dispatch(setIsFollowing(true, id))
+    usersApi.follow(id).then((res) => {
+        if (res.data.resultCode === 0) {
+            dispatch(follow(id))
+            dispatch(setIsFollowing(false, id))
+        }
+    })
+}
+export const unFollowTC = (id: number) => (dispatch: any) => {
+    dispatch(setIsFollowing(true, id))
+    usersApi.unFollow(id).then((res) => {
+        if (res.data.resultCode === 0) {
+            dispatch(unFollow(id))
+            dispatch(setIsFollowing(false, id))
+        }
+    })
+}
