@@ -6,9 +6,12 @@ type PreloaderPropsType = {
 }
 
 const Preloader = (props:PreloaderPropsType) => {
+
     return (
         <>
-            <img src={preloader} alt="Loading" className={props.isActive?`${s.active}`:`${s.disabled}`}/>
+            <img src={preloader} alt="Loading" className={
+                props.isActive?`${s.active}`:`${s.disabled}`
+            }/>
         </>
     );
 };

@@ -1,4 +1,5 @@
 import {ActionTypes, AddPostActionType, ChangeTextForPostActionType, ProfilePageType, UserInfoType} from "./State";
+import {profileApi} from "../api/profile-api";
 
 export type SetUserInfoAT = ReturnType<typeof setUser>
 const initState:ProfilePageType = {
@@ -54,3 +55,9 @@ export const profileReducer = (state: ProfilePageType = initState, action: Actio
 export const addPost = (): AddPostActionType => ({type: "ADD-POST"})
 export const changeTextForPost = (text: string): ChangeTextForPostActionType => ({type: 'CHANGE-TEXT-FOR-POST', text})
 export const setUser = (userInfo:UserInfoType) =>({type:"SET-USER",userInfo}as const)
+export const setUserProfile = (userId:string)=>(dispatch:any)=>{
+    profileApi.getUsersProfile(userId)
+        .then((res) => {
+            dispatch(setUser(res.data))
+        })
+}

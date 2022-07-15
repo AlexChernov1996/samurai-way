@@ -7,6 +7,7 @@ import {
 import {AppStateType} from "../../state/store";
 import React, {ChangeEvent} from "react";
 import {Users} from "./Users";
+import {Redirect} from "react-router-dom";
 
 type MapStateToPropsType = {
     users: UserType[]
@@ -15,6 +16,7 @@ type MapStateToPropsType = {
     totalUsersCount: number
     isFetching: boolean
     isFollowing: number[]
+    isAuth:boolean
 }
 type UsersPropsType = {
     users: UserType[]
@@ -31,6 +33,7 @@ type UsersPropsType = {
     getUsersTC: (count: number, currentPage: number) => void
     followTC:(id:number)=>void
     unFollowTC:(id:number)=>void
+    isAuth:boolean
 }
 
 export class UsersContainerCC extends React.Component <UsersPropsType, {}> {
@@ -44,6 +47,7 @@ export class UsersContainerCC extends React.Component <UsersPropsType, {}> {
     }
 
     render() {
+        if(!this.props.isAuth) return  <Redirect to='/login'/>
         return <Users
             users={this.props.users}
             count={this.props.count}
@@ -61,6 +65,7 @@ export class UsersContainerCC extends React.Component <UsersPropsType, {}> {
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
+        isAuth:state.auth.isAuth,
         users: state.usersPage.users,
         count: state.usersPage.count,
         totalUsersCount: state.usersPage.totalUsersCount,

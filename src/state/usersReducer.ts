@@ -83,8 +83,9 @@ export const setCurrentPage = (value: number): SetCurrentPageAT => ({type: "SET-
 export const setFetching = (value: boolean) => ({type: "SET-FETCHING-PAGE", payload: {value}} as const)
 export const setIsFollowing = (value: boolean, id: number) => ({type: "IS-FOLLOWING", payload: {value, id}} as const)
 export const getUsersTC = (count: number, currentPage: number) => (dispatch: any) => {
-    setFetching(true)
+    dispatch(setFetching(true))
     usersApi.getUsers(count, currentPage).then(res => {
+
         dispatch(getUsers(res.items))
         dispatch(getTotalUsersCount(res.totalCount))
         dispatch(setFetching(false))
