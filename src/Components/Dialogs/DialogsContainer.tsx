@@ -3,9 +3,10 @@ import Dialogs from "./Dialogs";
 import {addMessageAC, changeTextForMessageAC} from "../../state/dialogsReducer";
 import {connect} from "react-redux";
 import {AppStateType} from "../../state/store";
-import {Dispatch} from "redux";
+import {compose, Dispatch} from "redux";
 import {DialogsPageType} from "../../state/State";
 import {AuthRedirectHoc} from "../../hoc/AuthRedirectHOC";
+
 
 type MapDispatchToPropsType = {
     changeTextForMessage: (text: string) => void
@@ -29,5 +30,6 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
         }
     }
 }
-export default AuthRedirectHoc(connect(mapStateToProps, mapDispatchToProps)(Dialogs))
+
+export default compose<React.ComponentType>(AuthRedirectHoc,connect(mapStateToProps, mapDispatchToProps))(Dialogs)
 

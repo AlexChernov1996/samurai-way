@@ -6,6 +6,7 @@ import {UserInfoType} from "../../../state/State";
 import {setUserProfile} from "../../../state/profileReducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {AuthRedirectHoc} from "../../../hoc/AuthRedirectHOC";
+import {compose} from "redux";
 
 
 type MapDispatchToPropsType = {
@@ -44,5 +45,5 @@ const mapStateToProps = (state: AppStateType): UserInfoType => {
         photos: state.profilePage.userInfo.photos,
     }
 }
-export default AuthRedirectHoc(connect(mapStateToProps, {setUserProfile})(withRouter(ProfileInfoClassContainer)))
+export default compose<React.ComponentType>(AuthRedirectHoc, withRouter, connect(mapStateToProps, {setUserProfile}))(ProfileInfoClassContainer)
 

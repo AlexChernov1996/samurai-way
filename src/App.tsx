@@ -4,9 +4,9 @@ import Navbar from "./Components/Navbar/Navbar";
 import Profile from "./Components/Profile/Profile";
 import {Route} from "react-router-dom";
 import DialogsContainer from "./Components/Dialogs/DialogsContainer";
-import {UsersContainer} from "./Components/Users/UsersContainer";
 import HeaderContainer from "./Components/Header/HeaderContainer";
 import LoginPage from "./Components/Login/LoginPage";
+import UsersContainer from "./Components/Users/UsersContainer";
 
 
 function App() {

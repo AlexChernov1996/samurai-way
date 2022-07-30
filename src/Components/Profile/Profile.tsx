@@ -9,8 +9,7 @@ const Profile = () => {
     return (
         <div className={styles.profile}>
          <ProfileInfoContainer  />
-            <ContainerMyPosts
-            />
+            <ContainerMyPosts/>
         </div>
     );
 };

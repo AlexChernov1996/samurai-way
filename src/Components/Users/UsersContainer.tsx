@@ -7,7 +7,6 @@ import {
 import {AppStateType} from "../../state/store";
 import React, {ChangeEvent} from "react";
 import {Users} from "./Users";
-import {AuthRedirectHoc} from "../../hoc/AuthRedirectHOC";
 
 type MapStateToPropsType = {
     users: UserType[]
@@ -30,9 +29,8 @@ type UsersPropsType = {
     isFollowing: number[]
     setIsFollowing: (value: boolean, id: number) => void
     getUsersTC: (count: number, currentPage: number) => void
-    followTC:(id:number)=>void
-    unFollowTC:(id:number)=>void
-    isAuth:boolean
+    followTC: (id: number) => void
+    unFollowTC: (id: number) => void
 }
 
 export class UsersContainerCC extends React.Component <UsersPropsType, {}> {
@@ -54,7 +52,7 @@ export class UsersContainerCC extends React.Component <UsersPropsType, {}> {
             isFetching={this.props.isFetching}
             isFollowing={this.props.isFollowing}
             setIsFollowing={this.props.setIsFollowing}
-            follow ={this.props.followTC}
+            follow={this.props.followTC}
             unFollow={this.props.unFollowTC}
 
         />
@@ -71,8 +69,9 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         isFollowing: state.usersPage.isFollowing
     }
 }
-export const UsersContainer = AuthRedirectHoc(connect(mapStateToProps, {
-   getUsers, getTotalUsersCount, setCurrentPage,
+
+export default connect(mapStateToProps, {
+    getUsers, getTotalUsersCount, setCurrentPage,
     setFetching, setIsFollowing, getUsersTC,
-    followTC,unFollowTC
-})(UsersContainerCC))
+    followTC, unFollowTC
+})(UsersContainerCC)
