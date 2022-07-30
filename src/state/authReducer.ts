@@ -1,6 +1,6 @@
 import {headerApi} from "../api/header-api";
 
-export type authReducerType = {
+export type AuthReducerType = {
     id: number | null
     login: string | null
     email: string | null
@@ -16,7 +16,7 @@ let initialState = {
 }
 
 
-export const authReducer = (state: authReducerType = initialState, action: AuthActionTypes): authReducerType => {
+export const authReducer = (state: AuthReducerType = initialState, action: AuthActionTypes): AuthReducerType => {
     switch (action.type) {
         case "SET-USER-DATA":
             return {...state, ...action.data}

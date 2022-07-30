@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from "./profile.module.css"
 import ContainerMyPosts from './MyPosts/ContainerMyPosts';
-import {ProfileInfoContainer} from "./ProfileInfo/ProfileInfoClassContainer";
+import ProfileInfoContainer from "./ProfileInfo/ProfileInfoClassContainer";
 
 
 const Profile = () => {

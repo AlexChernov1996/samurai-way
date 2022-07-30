@@ -2,8 +2,8 @@ import React, {ChangeEvent} from 'react';
 import styles from "./dialogs.module.css"
 import {Dialog} from "./Dialog/Dialog";
 import Message from "./Message/Message";
-import {ActionTypes, DialogsPageType} from "../../state/State";
-import {addMessageAC, changeTextForMessageAC} from "../../state/dialogsReducer";
+import {DialogsPageType} from "../../state/State";
+
 
 type DialogsPropsType = {
     dialogsPage: DialogsPageType

@@ -5,6 +5,7 @@ import {AppStateType} from "../../../state/store";
 import {UserInfoType} from "../../../state/State";
 import {setUserProfile} from "../../../state/profileReducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
+import {AuthRedirectHoc} from "../../../hoc/AuthRedirectHOC";
 
 
 type MapDispatchToPropsType = {
@@ -43,6 +44,5 @@ const mapStateToProps = (state: AppStateType): UserInfoType => {
         photos: state.profilePage.userInfo.photos,
     }
 }
-export let ProfileInfoContainerWithURLData = withRouter(ProfileInfoClassContainer)
-export let ProfileInfoContainer = connect(mapStateToProps, {setUserProfile})(ProfileInfoContainerWithURLData)
-export default ProfileInfoClassContainer;
+export default AuthRedirectHoc(connect(mapStateToProps, {setUserProfile})(withRouter(ProfileInfoClassContainer)))
+

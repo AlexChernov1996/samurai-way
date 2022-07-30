@@ -5,24 +5,8 @@ import {connect} from "react-redux";
 import {AppStateType} from "../../state/store";
 import {Dispatch} from "redux";
 import {DialogsPageType} from "../../state/State";
+import {AuthRedirectHoc} from "../../hoc/AuthRedirectHOC";
 
-// const DialogsContainer = () => {
-//     return <Context.Consumer>
-//         {(store) => {
-//             const dialogsPage = store.getState().dialogsPage
-//             const addMessage = () => {
-//                 store.dispatch(addMessageAC())
-//             }
-//             const changeNewTextForMessage = (text: string) => {
-//                 store.dispatch(changeTextForMessageAC(text))
-//             }
-//             return <Dialogs addMessage={addMessage}
-//                             changeTextForMessage={changeNewTextForMessage}
-//                             dialogsPage={dialogsPage}
-//             />
-//         }}
-//     </Context.Consumer>
-// };
 type MapDispatchToPropsType = {
     changeTextForMessage: (text: string) => void
     addMessage: () => void
@@ -45,7 +29,5 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
         }
     }
 }
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+export default AuthRedirectHoc(connect(mapStateToProps, mapDispatchToProps)(Dialogs))
 
-
-export default DialogsContainer;
