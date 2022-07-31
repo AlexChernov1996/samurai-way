@@ -2,9 +2,10 @@ import React from 'react';
 import s from './profile_info.module.css'
 
 import {UserInfoType} from "../../../state/State";
+import EditableStatus from "./EditableStatus/EditableStatus";
 
 
-const ProfileInfo = (props:UserInfoType) => {
+export const ProfileInfo = (props:UserInfoType) => {
     return (
         <div className={s.wrapper}>
             <div className={s.ava}>
@@ -16,17 +17,15 @@ const ProfileInfo = (props:UserInfoType) => {
             </div>
             <div>
                 <h1>{props.fullName}</h1>
+                <EditableStatus status={props.aboutMe}/>
                 <ul>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing.</li>
-                        <li>Lorem ipsum dolor sit amet.</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
                     <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
                     <li>Lorem ipsum dolor.</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur.</li></ul>
+                    <li>Lorem ipsum dolor sit amet, consectetur.</li>
+                </ul>
             </div>
-
         </div>
     );
 };
 
-export default ProfileInfo;
+

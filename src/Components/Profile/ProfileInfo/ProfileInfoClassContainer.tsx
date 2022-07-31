@@ -1,5 +1,5 @@
 import React from 'react';
-import ProfileInfo from "./ProfileInfo";
+import {ProfileInfo} from "./ProfileInfo";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../state/store";
 import {UserInfoType} from "../../../state/State";
@@ -20,7 +20,7 @@ export  type ProfileInfoContainerPropsType = RouteComponentProps<PathParamsType>
 
 class ProfileInfoClassContainer extends React.Component <ProfileInfoContainerPropsType, {}> {
     componentDidMount() {
-        this.props.setUserProfile(this.props.match.params.userId)
+        this.props.setUserProfile(this.props.match.params.userId || '19605')
     }
 
     render() {
@@ -33,7 +33,6 @@ class ProfileInfoClassContainer extends React.Component <ProfileInfoContainerPro
                             contacts={this.props.contacts}/>
     };
 }
-
 const mapStateToProps = (state: AppStateType): UserInfoType => {
     return {
         aboutMe: state.profilePage.userInfo.aboutMe,

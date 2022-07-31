@@ -17,17 +17,14 @@ const initState:ProfilePageType = {
         },
         lookingForAJob: true,
         lookingForAJobDescription: "не ищу, а дурачусь",
-        fullName: "samurai dimych",
-        userId: 2,
+        fullName: "samurai ",
+        userId: 0,
         photos: {
-            small: "https://social-network.samuraijs.com/activecontent/images/users/2/user-small.jpg?v=0",
-            large: "https://social-network.samuraijs.com/activecontent/images/users/2/user.jpg?v=0"
+            small: null,
+            large: null
         }
     },
-    posts: [
-        {id: '1', text: 'Lorem ipsum dolor sit.', likes: 4},
-        {id: '2', text: 'Lorem ipsum dolor sit.', likes: 2},
-    ],
+    posts: [],
     textForPost: ""
 }
 
