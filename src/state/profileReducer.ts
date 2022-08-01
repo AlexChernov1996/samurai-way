@@ -2,7 +2,10 @@ import {ActionTypes, AddPostActionType, ChangeTextForPostActionType, ProfilePage
 import {profileApi} from "../api/profile-api";
 
 export type SetUserInfoAT = ReturnType<typeof setUser>
-const initState:ProfilePageType = {
+export type SetProfileStatusAT = ReturnType<typeof getStatus>
+export type UpdateProfileStatusAT = ReturnType<typeof updateStatus>
+
+const initState: ProfilePageType = {
     userInfo: {
         aboutMe: "я круто чувак 1001%",
         contacts: {
@@ -18,17 +21,19 @@ const initState:ProfilePageType = {
         lookingForAJob: true,
         lookingForAJobDescription: "не ищу, а дурачусь",
         fullName: "samurai ",
-        userId: 0,
+        userId: 19605,
         photos: {
             small: null,
             large: null
-        }
+        },
     },
+    status: '',
     posts: [],
-    textForPost: ""
+    textForPost: '',
+
 }
 
-export const profileReducer = (state: ProfilePageType = initState, action: ActionTypes):ProfilePageType => {
+export const profileReducer = (state: ProfilePageType = initState, action: ActionTypes): ProfilePageType => {
     switch (action.type) {
         case 'ADD-POST':
             let copy = {
@@ -44,15 +49,35 @@ export const profileReducer = (state: ProfilePageType = initState, action: Actio
         case 'CHANGE-TEXT-FOR-POST':
             return {...state, textForPost: action.text}
         case "SET-USER":
-            return {...state,userInfo:action.userInfo}
+            return {...state, userInfo: action.userInfo}
+        case "GET-STATUS":
+            return {...state, status: action.status}
+        case "SET-STATUS":
+            return {...state, status: action.status}
         default:
             return state
     }
 }
 export const addPost = (): AddPostActionType => ({type: "ADD-POST"})
 export const changeTextForPost = (text: string): ChangeTextForPostActionType => ({type: 'CHANGE-TEXT-FOR-POST', text})
-export const setUser = (userInfo:UserInfoType) =>({type:"SET-USER",userInfo}as const)
-export const setUserProfile = (userId:string)=>(dispatch:any)=>{
+export const setUser = (userInfo: UserInfoType) => ({type: "SET-USER", userInfo} as const)
+export const getStatus = (status: string) => ({type: "GET-STATUS", status} as const)
+export const updateStatus = (status: string) => ({type: "SET-STATUS", status} as const)
+export const setProfileStatus = (userId: string) => (dispatch: any) => {
+    profileApi.getProfileStatus(userId)
+        .then((res) => {
+            dispatch(getStatus(res.data))
+        })
+}
+export const updateProfileStatus = (status: string) => (dispatch: any) => {
+    profileApi.setProfileStatus(status)
+        .then((res) => {
+            if (res.data.resultCode === 0) {
+                dispatch(updateStatus(status))
+            }
+        })
+}
+export const setUserProfile = (userId: string) => (dispatch: any) => {
     profileApi.getUsersProfile(userId)
         .then((res) => {
             dispatch(setUser(res.data))

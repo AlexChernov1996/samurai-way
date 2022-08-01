@@ -1,30 +1,36 @@
-import React from 'react';
+import React, {ChangeEvent, useState} from 'react';
 
 type  StatusPropsType = {
-    status: string | null
+    status: string
+    updateStatus: (status: string) => void
 }
 
-class EditableStatus extends React.Component<StatusPropsType> {
-    state = {editMode: false}
+const EditableStatus = (props: StatusPropsType) => {
+    let [state, setState] = useState({editMode: false, textForStatus: props.status})
 
-    editModeOn() {
-        this.setState({editMode: true})
+    function editModeOn() {
+        setState({...state, editMode: true})
     }
 
-    editModeOff() {
-        this.setState({editMode: false})
+    function editModeOff() {
+        setState({...state, editMode: false})
+        props.updateStatus(state.textForStatus!)
     }
 
-    render() {
-        return (
-
-            <div>{this.props.status &&
-            this.state.editMode
-                ? <input onBlur={this.editModeOff.bind(this)} autoFocus={true} value={this.props.status}/>
-                : <p onDoubleClick={this.editModeOn.bind(this)}>{this.props.status}</p>
-            }</div>
-        );
+    function onChangeHandler(e: ChangeEvent<HTMLInputElement>) {
+        setState({...state, textForStatus: e.currentTarget.value})
     }
+
+    return (
+        <div>{
+            state.editMode
+                ? <input onChange={onChangeHandler}
+                         onBlur={editModeOff}
+                         autoFocus={true}
+                         value={state.textForStatus!}/>
+                : <p onDoubleClick={editModeOn}>{props.status || 'Add status'}</p>
+        }</div>
+    );
 }
 
 export default EditableStatus;

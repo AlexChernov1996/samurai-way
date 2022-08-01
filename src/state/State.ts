@@ -1,4 +1,4 @@
-import {SetUserInfoAT} from "./profileReducer";
+import {SetProfileStatusAT, SetUserInfoAT, UpdateProfileStatusAT} from "./profileReducer";
 
 export type DialogsType = {
     id: string
@@ -33,17 +33,18 @@ export type photosUserInfoType = {
     large: string | null
 }
 export type UserInfoType = {
-        aboutMe: string | null
-        contacts: contactsUserInfoType
-        lookingForAJob: boolean | null
-        lookingForAJobDescription: string | null
-        fullName: string
-        userId: number
-        photos: photosUserInfoType
+    aboutMe: string | null
+    contacts: contactsUserInfoType
+    lookingForAJob: boolean | null
+    lookingForAJobDescription: string | null
+    fullName: string
+    userId: number
+    photos: photosUserInfoType
 }
 export type ProfilePageType = {
     userInfo: UserInfoType
     posts: PostType[]
+    status: string
     textForPost: string
 }
 export type StateType = {
@@ -70,7 +71,7 @@ export type ActionTypes =
     | AddPostActionType
     | AddMessageActionType
     | ChangeTextForMessageActionType
-|SetUserInfoAT
+    | SetUserInfoAT | SetProfileStatusAT | UpdateProfileStatusAT
 export const store = {
     _state: {
         dialogsPage: {
