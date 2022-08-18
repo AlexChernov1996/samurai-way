@@ -1,4 +1,5 @@
 import {SetProfileStatusAT, SetUserInfoAT, UpdateProfileStatusAT} from "./profileReducer";
+import {addMessage} from "./dialogsReducer";
 
 export type DialogsType = {
     id: string
@@ -16,7 +17,6 @@ export type PostType = {
 export type DialogsPageType = {
     dialogs: DialogsType[]
     messages: MessagesType[]
-    textForNewMessage: string
 }
 export type contactsUserInfoType = {
     facebook: string | null
@@ -45,7 +45,6 @@ export type ProfilePageType = {
     userInfo: UserInfoType
     posts: PostType[]
     status: string
-    textForPost: string
 }
 export type StateType = {
     dialogsPage: DialogsPageType
@@ -54,14 +53,14 @@ export type StateType = {
 
 export type AddPostActionType = {
     type: "ADD-POST"
+    postText:string
 }
 export type ChangeTextForPostActionType = {
     type: 'CHANGE-TEXT-FOR-POST'
     text: string
 }
-export type AddMessageActionType = {
-    type: "ADD-MESSAGE"
-}
+export type AddMessageActionType = ReturnType<typeof addMessage>
+
 export type ChangeTextForMessageActionType = {
     type: 'CHANGE-TEXT-FOR-MESSAGE'
     text: string

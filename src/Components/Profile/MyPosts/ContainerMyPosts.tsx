@@ -24,12 +24,10 @@ import {PostType} from "../../../state/State";
 // };
 type MapStateToPropsType = {
     posts: PostType[]
-    textForPost: string
 }
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         posts: state.profilePage.posts,
-        textForPost: state.profilePage.textForPost
     }
 }
 
