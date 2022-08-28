@@ -11,7 +11,6 @@ let mapStateToProps = (state:AppStateType):MSTPType=>{
     }
 }
 export function AuthRedirectHoc <T> (Component:ComponentType<T>)  {
-
     function WithAuthRedirect (props:MSTPType){
         let {isAuth,...restProps} = props
             if (!isAuth) return<Redirect to={'/login'}/>

@@ -1,0 +1,10 @@
+.loginPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginBlock {
+    width: 40%;
+    height: 60%;
+}
