@@ -12,16 +12,14 @@ const initState = {
         {id: '2', text: 'Lorem ipsum12331.'},
         {id: '3', text: 'Lorem ipsum12311ddfwe dfss.'},
     ],
-    textForNewMessage: '1111'
 }
 export const dialogsReducer = (state: DialogsPageType = initState, action: ActionTypes) => {
     switch (action.type) {
         case 'ADD-MESSAGE':
             let copy = {
                 ...state,
-                messages: [...state.messages, {id: new Date().toString(), text: state.textForNewMessage}]
+                messages: [...state.messages, {id: new Date().toString(), text: action.message}]
             }
-            copy.textForNewMessage =''
             return copy
         case 'CHANGE-TEXT-FOR-MESSAGE':
             return {...state, textForNewMessage: action.text}
@@ -34,4 +32,4 @@ export const changeTextForMessageAC = (text: string): ChangeTextForMessageAction
     type: 'CHANGE-TEXT-FOR-MESSAGE',
     text
 })
-export const addMessageAC = (): AddMessageActionType => ({type: "ADD-MESSAGE"})
+export const addMessage = (message: string) => ({type: "ADD-MESSAGE", message} as const)

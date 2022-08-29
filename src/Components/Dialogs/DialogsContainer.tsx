@@ -1,17 +1,13 @@
 import React from 'react';
 import Dialogs from "./Dialogs";
-import {addMessageAC, changeTextForMessageAC} from "../../state/dialogsReducer";
 import {connect} from "react-redux";
 import {AppStateType} from "../../state/store";
-import {compose, Dispatch} from "redux";
+import {compose} from "redux";
 import {DialogsPageType} from "../../state/State";
 import {AuthRedirectHoc} from "../../hoc/AuthRedirectHOC";
+import {addMessage} from "../../state/dialogsReducer";
 
 
-type MapDispatchToPropsType = {
-    changeTextForMessage: (text: string) => void
-    addMessage: () => void
-}
 type MapStateToProps = {
     dialogsPage: DialogsPageType
 }
@@ -20,16 +16,7 @@ const mapStateToProps = (state: AppStateType): MapStateToProps => {
         dialogsPage: state.dialogsPage
     }
 }
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
-    return {
-        changeTextForMessage: (text: string) => {
-            dispatch(changeTextForMessageAC(text))
-        },
-        addMessage: () => {
-            dispatch(addMessageAC())
-        }
-    }
-}
 
-export default compose<React.ComponentType>(AuthRedirectHoc,connect(mapStateToProps, mapDispatchToProps))(Dialogs)
+
+export default compose<React.ComponentType>(AuthRedirectHoc,connect(mapStateToProps, {addMessage}))(Dialogs)
 

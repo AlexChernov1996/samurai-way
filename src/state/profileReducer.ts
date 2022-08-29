@@ -29,25 +29,18 @@ const initState: ProfilePageType = {
     },
     status: '',
     posts: [],
-    textForPost: '',
-
 }
 
 export const profileReducer = (state: ProfilePageType = initState, action: ActionTypes): ProfilePageType => {
     switch (action.type) {
         case 'ADD-POST':
-            let copy = {
+            return {
                 ...state, posts: [{
                     id: new Date().toString(),
-                    text: state.textForPost,
+                    text: action.postText,
                     likes: 0
                 }, ...state.posts]
             }
-            copy.textForPost = ''
-            return copy
-
-        case 'CHANGE-TEXT-FOR-POST':
-            return {...state, textForPost: action.text}
         case "SET-USER":
             return {...state, userInfo: action.userInfo}
         case "GET-STATUS":
@@ -58,7 +51,7 @@ export const profileReducer = (state: ProfilePageType = initState, action: Actio
             return state
     }
 }
-export const addPost = (): AddPostActionType => ({type: "ADD-POST"})
+export const addPost = (postText: string): AddPostActionType => ({type: "ADD-POST", postText})
 export const changeTextForPost = (text: string): ChangeTextForPostActionType => ({type: 'CHANGE-TEXT-FOR-POST', text})
 export const setUser = (userInfo: UserInfoType) => ({type: "SET-USER", userInfo} as const)
 export const getStatus = (status: string) => ({type: "GET-STATUS", status} as const)

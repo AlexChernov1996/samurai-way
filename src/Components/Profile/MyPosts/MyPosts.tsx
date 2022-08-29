@@ -1,34 +1,25 @@
-import React, {ChangeEvent} from 'react';
-import s from "./my_posts.module.css"
+import React from 'react';
+
 import Post from "./Post/Post";
-import {ActionTypes, PostType} from "../../../state/State";
+import {PostType} from "../../../state/State";
+import AddPostForm, {PostFormData} from "./Post/AddPostForm/AddPostForm";
 
 
 type MyPostsPropsType = {
     posts: PostType[]
-    textForPost: string
-    addPost:()=> void
-    changeTextForPost:(text:string)=>void
+    addPost: (textForPost: string) => void
+    changeTextForPost: (text: string) => void
 }
 const MyPosts = (props: MyPostsPropsType) => {
 
-    const addPost = () => {
-       props.addPost()
+    const addPost = (formData: PostFormData) => {
+        props.addPost(formData.textForPost)
     }
-    const updateTextForPost = (e:ChangeEvent<HTMLTextAreaElement>) => {
-        props.changeTextForPost(e.currentTarget.value)
-    }
+
     return (
         <div>
-            <div className={s.addPostForm}>
-                <textarea placeholder={"New post...."}
-                          value={props.textForPost}
-                          onChange={updateTextForPost}
-                >
-                </textarea>
-                <button onClick={addPost}>Add post</button>
-            </div>
-            {props.posts.map(p => <Post text={p.text} likes={p.likes}/>)}
+            <AddPostForm onSubmit={addPost}/>
+            {props.posts.map((p, index) => <Post key={index} text={p.text} likes={p.likes}/>)}
         </div>
     );
 };
