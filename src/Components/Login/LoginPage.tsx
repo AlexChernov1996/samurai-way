@@ -4,9 +4,10 @@ import 'antd/dist/antd.css';
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
 import {Button, Checkbox, Form, Input} from 'antd';
 import {useForm} from "react-hook-form";
-import {connect, useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {logInTC} from "../../state/authReducer";
 import {LogInRequestType} from "../../api/auth-api";
+
 
 
 type LoginValuesType = {
@@ -17,7 +18,7 @@ type LoginValuesType = {
 
 export const LogInFormPage: React.FC = (props) => {
     const dispatch = useDispatch()
-    const {register, handleSubmit, watch, formState: {errors}} = useForm<LoginValuesType>();
+    const {register, formState: {errors}} = useForm<LoginValuesType>();
     const onSubmit = (data: LogInRequestType) => dispatch(logInTC(data));
 
     return (
