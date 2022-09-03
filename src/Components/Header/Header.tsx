@@ -3,6 +3,7 @@ import styles from './header.module.css'
 
 type HeaderPropsType = {
     isAuth: boolean
+    logOut: () => void
 }
 const Header = (props: HeaderPropsType) => {
     return (
@@ -11,7 +12,9 @@ const Header = (props: HeaderPropsType) => {
                 src="https://thumbs.dreamstime.com/b/green-tree-logo-design-simple-vector-tree-icon-green-tree-logo-design-white-background-124365698.jpg"
                 alt=""/>
             {props.isAuth
-                ? <button>LogOut</button>
+                ? <button onClick={() => {
+                    props.logOut()
+                }}>LogOut</button>
                 : <button>LogIn</button>
             }
 

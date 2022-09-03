@@ -4,10 +4,11 @@ import 'antd/dist/antd.css';
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
 import {Button, Checkbox, Form, Input} from 'antd';
 import {useForm} from "react-hook-form";
-import {useDispatch} from "react-redux";
+import {connect, useDispatch, useSelector} from "react-redux";
 import {logInTC} from "../../state/authReducer";
 import {LogInRequestType} from "../../api/auth-api";
-
+import {AppStateType} from "../../state/store";
+import {Redirect} from "react-router-dom";
 
 
 type LoginValuesType = {
@@ -15,12 +16,15 @@ type LoginValuesType = {
     password: string
     rememberMe: boolean
 }
-
+//type LogInFormType = MSTPType & { logIn: (data: LoginValuesType) => void }
 export const LogInFormPage: React.FC = (props) => {
     const dispatch = useDispatch()
+    const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
     const {register, formState: {errors}} = useForm<LoginValuesType>();
     const onSubmit = (data: LogInRequestType) => dispatch(logInTC(data));
-
+    if (isAuth) {
+        return <Redirect to={'profile'}/>
+    }
     return (
         <div className={style.loginPage}>
             <Form
@@ -59,5 +63,13 @@ export const LogInFormPage: React.FC = (props) => {
         </div>
     );
 }
-
-
+// let MSTP = (state: AppStateType): MSTPType => {
+//     return {
+//         isAuth: state.auth.isAuth
+//     }
+// }
+//
+// export  const ConnectedLoginForm = connect(MSTP, {logInTC})(LogInFormPage)
+// type MSTPType = {
+//     isAuth: boolean
+// }
