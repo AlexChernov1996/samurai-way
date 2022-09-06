@@ -10,7 +10,7 @@ const instanceApi = axios.create({
 
 export const authApi = {
     getAuth() {
-        return instanceApi.get(`auth/me`)
+        return instanceApi.get<ResponseType<{id:number,email:string,login:string}>>(`auth/me`)
             .then(res => res.data)
     },
     logIn(data: LogInRequestType) {

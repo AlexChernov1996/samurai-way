@@ -8,3 +8,12 @@
     width: 40%;
     height: 60%;
 }
+.errorMessage {
+    color: #bf1650;
+}
+
+.errorMessage::before {
+    color: red;
+    display: inline;
+    content: "⚠ ";
+}

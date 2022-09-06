@@ -49,10 +49,15 @@ export const clearAuthData = () => ({type: "CLEAR/AUTH/DATA"} as const)
 export const getAuth = () => (dispatch: any) => {
     authApi.getAuth().then(res => {
         if (res.resultCode === 0) {
-            let {email, id, login} = res.data
+            let {id, email, login} = res.data
             dispatch(setAuthUserData(id, login, email))
+            dispatch(setIsAuthValue(true))
+        } else {
+            dispatch(setIsAuthValue(false))
+            throw new Error(res.messages[0])
         }
-        dispatch(setIsAuthValue(true))
+    }).catch((err) => {
+        alert(err)
     })
 }
 export const logOutTC = () => (dispatch: Dispatch) => {
